@@ -27,4 +27,16 @@ class DynamicDatasourceApplicationTests {
 
     }
 
+    @Test
+    void threadLocal() {
+        DynamicDataSourceContextHolder.setDataSource("secondary");
+        System.out.println(DynamicDataSourceContextHolder.getDataSource());
+        new Thread(() -> {
+            System.out.println(DynamicDataSourceContextHolder.getDataSource());
+        }).start();
+
+        // secondary
+        // primary
+    }
+
 }
